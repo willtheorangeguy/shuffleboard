@@ -1,0 +1,24 @@
+A Sjoelbak board is a wooden board 2 metres x 0.4 metres with three sides about 5cm high. Wooden disks of diameter 5.2cm are pushed up the board from the front of the game which is without a side barrier. 43cm from the front of the board, a flat bar of wood lies across the top of the game under which the disks pass. This is called the "start bar". In league and competition games, it is forbidden to stack disks on the start bar but players indulging in friendly games often use it for just this purpose. 39cm from the back of the board, a piece of wood is set vertically with 4 slots or arches spaced evenly along the bottom. This is called the "gate bar", the arches on it are marked 2, 3, 4, 1 from left to right and are 6cm wide. Behind the arches, the board is divided lengthways to the back of the board into 4 partitions. These containers separate the disks that have passed through the different arches.
+
+The above dimensions are for the "Homas" board. The boards from "Schilte" are exactly the same but the arches and disks are a slightly different size.
+Play
+
+A game of Sjoelen consists of each player taking one turn and the player with the highest score wins the game. A turn consists of 3 chances to slide all the available disks down the board aiming for the numbered compartments. Each chance is referred to as a sub-turn. Due to the fact that slipping a disk into each of the four compartments doubles their scoring value, players normally attempt to slide an equal number of disks into each compartment. This is a significant contributing factor to the interest of the game.
+
+In the first sub-turn, the player slides all 30 disks. At the end of the sub-turn, any disks that end up in compartments stay in the compartments but are stacked in piles at the rear of the container to clear any obstruction from the compartment entrances. Traditionally, the first pile consisting of 4 disks is pushed into the rear corner of the container and subsequent piles of 3 disks are placed diagonally against the previous piles. If all disks entered compartments the turn is over but otherwise the remaining disks are brought back to be played again by the player for the second sub-turn. At the end of the second sub-turn, the same thing happens again: disks in compartments are stacked neatly and any remaining disks are returned to the player for the third sub-turn. The third sub-turn is the player's final chance to slide the remaining disks down the board after which the turn ends and the points are counted.
+
+A disk is counted as being in a compartment if the whole disk has passed across the front face of the gate bar. To settle disputes, a straight "gate stopper" should be pushed flat against the front the gate bar. If the disk moves, it was not in the container.
+
+Once a disk has passed completely under the start bar, it is considered to be in play and should not be touched until the end of that sub-turn except in the following situations: A disk enters a container via a route other than through that container's arch; A disk leaves the board; A disk exits a container other than through that container's arch; A disk returns under the start bar. In all four cases, the offending disk is removed from play but can be used in a subsequent sub-turn.
+Scoring
+
+Scoring is based on the numbers of the compartments 1 - 4. For each set of four disks constructed by taking one from each compartment, 20 points are awarded (i.e. 1 + 2 + 3 + 4 doubled). After the sets of four disks have been removed and tallied, any remaining disks score the amount shown on their compartment.
+
+Example:
+9 disks in compartment 2, 5 disks in compartment 3, 7 disks in compartment 4, 5 disks in compartment 1.
+
+5 complete sets of 4 disks scores 100. 4 extra disks in compartment 2 scores 8. 2 extra disks in compartment 4 which scores 8. Total score is 116 points.
+
+The maximum score in one turn is therefore 148 points = (20 X 7) + (2 X 4)
+
+Competition matches usually consist of either 5, 10 or 20 games and the total from all the games will be summed to determine the winner of the match. Each game is played on a different board and the different characteristics of each board make it very difficult to keep scoring consistently so, to make it slightly easier, five practice disks are allowed on a board before starting the game.
