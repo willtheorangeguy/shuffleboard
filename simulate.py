@@ -113,10 +113,36 @@ def build_space(config: SimConfig, openings):
     return space
 
 
+def ideal_distribution():
+    """Disk counts per gate that yield the maximum possible score.
+
+    The best score comes from completing as many full sets as possible (each
+    set is one disk in every gate, worth 20 points) and placing any leftover
+    disks in the highest-value gate. For 30 disks this is 7 in every gate plus
+    2 extras in the value-4 gate, i.e. [7, 7, 9, 7], which scores 148.
+    """
+    base, extra = divmod(DISKS_PER_TURN, 4)
+    best_gate = max(range(len(GATE_VALUES)), key=lambda i: GATE_VALUES[i])
+    ideal = [base] * len(GATE_VALUES)
+    ideal[best_gate] += extra
+    return ideal
+
+
 def choose_target_gate(counts):
-    min_count = min(counts)
-    candidates = [i for i, count in enumerate(counts) if count == min_count]
-    return min(candidates, key=lambda i: GATE_VALUES[i])
+    """Pick the gate furthest below its share of the score-maximizing layout.
+
+    Aiming at the gate with the largest remaining deficit keeps the gates
+    balanced (maximizing complete sets) while steering the leftover disks into
+    the highest-value gate. Ties are broken toward the higher-value gate so the
+    extras land where they score the most. With perfect aim this produces the
+    148-point layout; the previous min-count strategy capped out at 143 and
+    could never reach the maximum.
+    """
+    ideal = ideal_distribution()
+    deficits = [ideal[i] - counts[i] for i in range(len(counts))]
+    max_deficit = max(deficits)
+    candidates = [i for i, deficit in enumerate(deficits) if deficit == max_deficit]
+    return max(candidates, key=lambda i: GATE_VALUES[i])
 
 
 def opening_for_x(x, radius, openings):
@@ -257,6 +283,7 @@ def simulate_turn(rng, config: SimConfig, verbose=False):
 
 def run_trials(trials, max_turns, rng, config: SimConfig, verbose=False, progress_every=10):
     results = []
+    best_score = 0
     print(f"Running {trials} trial(s)...")
     for trial_index in range(1, trials + 1):
         if progress_every and (
@@ -264,12 +291,13 @@ def run_trials(trials, max_turns, rng, config: SimConfig, verbose=False, progres
             or trial_index % progress_every == 0
             or trial_index == trials
         ):
-            print(f"Trial {trial_index}/{trials}")
+            print(f"Trial {trial_index}/{trials} (best score so far: {best_score})")
         turns = 0
         success = False
         while turns < max_turns:
             turns += 1
             score, trace = simulate_turn(rng, config, verbose=verbose)
+            best_score = max(best_score, score)
             if verbose:
                 print(f"  Turn {turns}: score {score}")
                 for sub_index, entry in enumerate(trace, start=1):
@@ -282,15 +310,17 @@ def run_trials(trials, max_turns, rng, config: SimConfig, verbose=False, progres
                 success = True
                 break
         results.append(turns if success else None)
-    return results
+    return results, best_score
 
 
-def summarize_results(results, max_turns):
+def summarize_results(results, max_turns, best_score=None):
     successes = [result for result in results if result is not None]
     failed = len(results) - len(successes)
     print(f"Trials: {len(results)}")
     print(f"Max turns per trial: {max_turns}")
     print(f"Successes: {len(successes)}")
+    if best_score is not None:
+        print(f"Best score observed: {best_score}/{MAX_SCORE}")
     if failed:
         print(f"Failures (hit max turns): {failed}")
     if not successes:
@@ -366,7 +396,7 @@ def main():
         stable_steps=args.stable_steps,
     )
     rng = random.Random(args.seed)
-    results = run_trials(
+    results, best_score = run_trials(
         args.trials,
         args.max_turns,
         rng,
@@ -374,7 +404,7 @@ def main():
         verbose=args.verbose,
         progress_every=args.progress_every,
     )
-    summarize_results(results, args.max_turns)
+    summarize_results(results, args.max_turns, best_score=best_score)
     if args.csv:
         write_csv(args.csv, results)
 

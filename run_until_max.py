@@ -40,10 +40,12 @@ def build_arg_parser():
 
 def run_until_max(rng, config: SimConfig, progress_every, verbose, max_turns):
     turns = 0
+    best_score = 0
     print("Running turns until maximum score is achieved...")
     while True:
         turns += 1
         score, trace = simulate_turn(rng, config, verbose=verbose)
+        best_score = max(best_score, score)
         if verbose:
             print(f"Turn {turns}: score {score}")
             for sub_index, entry in enumerate(trace, start=1):
@@ -53,11 +55,11 @@ def run_until_max(rng, config: SimConfig, progress_every, verbose, max_turns):
                     f"remaining {entry['remaining']}, counts [{counts}]"
                 )
         elif progress_every and (turns == 1 or turns % progress_every == 0):
-            print(f"Turn {turns}: score {score}")
+            print(f"Turn {turns}: score {score} (best so far: {best_score})")
         if score == MAX_SCORE:
-            return turns
+            return turns, best_score
         if max_turns and turns >= max_turns:
-            return None
+            return None, best_score
 
 
 def main():
@@ -79,7 +81,7 @@ def main():
         stable_steps=args.stable_steps,
     )
     rng = random.Random(args.seed)
-    turns = run_until_max(
+    turns, best_score = run_until_max(
         rng,
         config,
         progress_every=args.progress_every,
@@ -87,7 +89,10 @@ def main():
         max_turns=args.max_turns,
     )
     if turns is None:
-        print("Stopped before reaching the maximum score.")
+        print(
+            f"Stopped before reaching the maximum score after {args.max_turns} turn(s)."
+        )
+        print(f"Best score observed: {best_score}/{MAX_SCORE}")
         return
     probability = 1 / turns
     print(f"Turns to reach {MAX_SCORE}: {turns}")
