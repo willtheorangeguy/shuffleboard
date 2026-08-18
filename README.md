@@ -1,51 +1,73 @@
-# Shuffleboard
+<!-- Logo -->
+<h1 align="center">Shuffleboard</h1>
 
-A physics-based simulator for the Dutch shuffleboard game *sjoelen* (a.k.a.
-*sjoelbak*) that estimates how many turns it takes to reach the highest
-possible score of **148**. See [`rules.txt`](rules.txt) for the full rules.
+<!-- Copy -->
+<h4 align="center">A physics simulator for the Dutch shuffleboard game <em>sjoelen</em>, estimating how many turns it takes to reach a perfect 148.</h4>
 
-## How it works
+<!-- Badges -->
+<div align="center">
+  <img alt="GitHub Issues" src="https://img.shields.io/github/issues/willtheorangeguy/shuffleboard">
+  <img alt="GitHub Pull Requests" src="https://img.shields.io/github/issues-pr/willtheorangeguy/shuffleboard">
+  <img alt="License" src="https://img.shields.io/github/license/willtheorangeguy/shuffleboard">
+  <img alt="Python" src="https://img.shields.io/badge/python-3-blue">
+</div>
 
-Each turn slides 30 disks down a 2.0 m × 0.4 m board (simulated top-down with
-[`pymunk`](https://www.pymunk.org/)) across up to three sub-turns. Disks that
-pass through one of the four gate arches (valued 2, 3, 4, 1 from left to right)
-are scored and removed; the rest are replayed on the next sub-turn. Scoring
-follows the rules: 20 points per complete set of four (one disk in every gate)
-plus the face value of each leftover disk.
+<!-- Navigation -->
+<p align="center">
+  <a href="#key-features">Key Features</a> •
+  <a href="#installation">Installation</a> •
+  <a href="#usage">Usage</a> •
+  <a href="#documentation">Documentation</a> •
+  <a href="#support">Support</a> •
+  <a href="#contributing">Contributing</a> •
+  <a href="#credits">Credits</a> •
+  <a href="#license">License</a>
+</p>
 
-The aiming strategy targets the gate furthest below the score-maximizing
-layout of `[7, 7, 9, 7]` (seven disks in every gate plus the two extras in the
-value-4 gate), which is the only distribution that yields 148.
+## Key Features
 
-## Setup
+- Top-down rigid-body simulation of a 2.0 m × 0.4 m board with 30 disks, using pymunk.
+- Full sjoelen scoring — 20 points per complete set of four, plus face values for the rest.
+- An aiming strategy that targets whichever gate is furthest below the score-maximising layout.
+- Batch mode for statistics across many trials, and single-run mode to watch one game reach 148.
+- Every physics and aiming parameter exposed as a command-line flag.
+- CSV export of per-trial results.
+
+## Installation
 
 ```bash
 pip install -r requirements.txt
 ```
 
-## Usage
+Needs Python 3, [numpy](https://numpy.org/), and [pymunk](https://www.pymunk.org/). See [`docs/installation.md`](docs/installation.md).
 
-Run a batch of trials and summarize how many turns each took to hit 148:
+## Usage
 
 ```bash
 python simulate.py --trials 200 --max-turns 200 --seed 1
 ```
 
-Run turns one after another until the maximum score is reached:
+Summarises how many turns each trial took to hit 148. See [`docs/usage.md`](docs/usage.md).
 
-```bash
-python run_until_max.py --seed 1 --max-turns 1000
-```
+## Documentation
 
-Both scripts report the best score observed so far so you can see progress.
-Pass `--verbose` for per-turn and per-sub-turn detail, and `--csv results.csv`
-(simulate.py) to export per-trial results. Physics and aiming parameters
-(launch speed, aim noise, friction, damping, etc.) are exposed as flags.
+Full documentation lives in [`docs/`](docs/README.md):
+[Quickstart](docs/quickstart.md) · [Installation](docs/installation.md) · [Usage](docs/usage.md) · [Configuration](docs/configuration.md) · [Architecture](docs/architecture.md) · [FAQ](docs/faq.md) · [Troubleshooting](docs/troubleshooting.md) · [Roadmap](docs/roadmap.md)
 
-## A note on reaching 148
+The game's rules are in [`rules.txt`](rules.txt).
 
-A perfect 148 requires all 30 disks to land in the exact `[7, 7, 9, 7]`
-layout. Because disks pile up and block the gate, a single turn rarely funnels
-all 30 through, so 148 is rare — typical turns score in the 70–130 range. Give
-`run_until_max.py` a finite `--max-turns` (or be ready to stop it) rather than
-relying on the unlimited default.
+## Support
+
+Open a [GitHub Discussion](https://github.com/willtheorangeguy/shuffleboard/discussions/new) or file an [issue](https://github.com/willtheorangeguy/shuffleboard/issues/new/choose).
+
+## Contributing
+
+Contributions welcome. See the org-wide [Contributing Guide](https://github.com/willtheorangeguy/.github/blob/main/CONTRIBUTING.md) and [Code of Conduct](https://github.com/willtheorangeguy/.github/blob/main/CODE_OF_CONDUCT.md).
+
+## Credits
+
+Physics by [pymunk](https://www.pymunk.org/), numerics by [numpy](https://numpy.org/).
+
+## License
+
+MIT — see [`LICENSE.md`](LICENSE.md).
